@@ -16,57 +16,36 @@
 
 package br.com.desafiowallmart.service;
 
-import java.util.Date;
-import java.util.Map;
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.desafiowallmart.service.vo.RotaInputVO;
+import br.com.desafiowallmart.bo.RotaBO;
+import br.com.desafiowallmart.service.vo.CadastraRotaVO;
+import br.com.desafiowallmart.vo.RotaVO;
 
 @RestController
 public class RotaService {
 
 	@Value("${application.message:Hello World}")
 	private String message = "Hello World";
-
-	@RequestMapping("/")
-	public String welcome(Map<String, Object> model) {
-		model.put("time", new Date());
-		model.put("message", this.message);
-		return "welcome";
-	}
-
-	@RequestMapping("/foo")
-	public String foo(Map<String, Object> model) {
-		throw new RuntimeException("Foo");
-	}
+	private static final String CADASTRO_SUCESSO = "Rota cadastrada com sucesso";
+//	@Resource
+//	private RotaBO rotaBO;
+	
 	
 	@RequestMapping(value="/cadastraRota", method = RequestMethod.GET)
-	public @ResponseBody String cadastraRota() {		
-		return "OK";
+	public String cadastraRota(CadastraRotaVO cadastraRotaVO) {
+//		rotaBO.cadastraRota(inputVO);
+		return CADASTRO_SUCESSO;
 	}
-	
+
 	@RequestMapping(value="/consultaRota", method = RequestMethod.GET)
-	public @ResponseBody RotaInputVO consultaRota(@RequestParam(value="rotaInputVO", required=false) RotaInputVO inputVO) {		
-		RotaInputVO vo = new RotaInputVO();
-		if (inputVO != null && inputVO.getOrigem() != null) {
-			vo = inputVO;
-		}
-		return vo;
-//		return inputVO.getDestino();
-	}
-	
-	@ResponseBody @RequestMapping(value="/consultaRota2", method = RequestMethod.GET)
-	public String consultaRota2(RotaInputVO teste) {				
-		return teste.getOrigem();
-//		return inputVO.getDestino();
+	public RotaVO consultaRota(RotaVO teste) {				
+		return teste;
 	}
 
 
