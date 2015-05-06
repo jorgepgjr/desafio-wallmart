@@ -34,14 +34,25 @@ public class RotaService {
 	private RotaBO rotaBO;
 	
 	
-	@RequestMapping(value="/cadastraRota", method = RequestMethod.POST)
+	@RequestMapping(value="/cadastraRota", method = RequestMethod.PUT)
 	public String cadastraRota(CadastraRotaVO cadastraRotaVO) {
 		rotaBO.cadastraRota(cadastraRotaVO.getRotaVO());
 		return CADASTRO_SUCESSO;
 	}
+	
+	@RequestMapping(value="/cadastraRotaExample", method = RequestMethod.GET)
+	public CadastraRotaVO consultaRotaExample() {
+		CadastraRotaVO cadastraRotaVO = new CadastraRotaVO();
+		cadastraRotaVO.setNomeMapa("teste");
+		RotaVO rotaVO = new RotaVO();
+		rotaVO.setDestino("destino");
+		rotaVO.setDistancia(new Double(10));		
+		cadastraRotaVO.setRotaVO(rotaVO);		
+		return cadastraRotaVO;
+	}
 
 	@RequestMapping(value="/consultaRota", method = RequestMethod.GET)
-	public RotaVO consultaRota(RotaVO teste) {				
+	public RotaVO consultaRota(RotaVO teste) {		
 		return teste;
 	}
 
