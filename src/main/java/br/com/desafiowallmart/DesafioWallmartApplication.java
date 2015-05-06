@@ -16,10 +16,23 @@
 
 package br.com.desafiowallmart;
 
+import java.io.File;
+
+import org.neo4j.graphalgo.GraphAlgoFactory;
+import org.neo4j.graphalgo.PathFinder;
+import org.neo4j.graphalgo.WeightedPath;
+import org.neo4j.graphdb.Direction;
+import org.neo4j.graphdb.DynamicRelationshipType;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.PathExpanders;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.kernel.impl.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +47,7 @@ import br.com.desafiowallmart.repository.LocalRepository;
 
 @SpringBootApplication
 @ComponentScan
-public class DesafioWallmartApplication {
+public class DesafioWallmartApplication implements CommandLineRunner {
 
 	@Configuration
 	@EnableNeo4jRepositories(basePackages = "br.com.desafiowallmart")
@@ -46,56 +59,105 @@ public class DesafioWallmartApplication {
 
 		@Bean
 		GraphDatabaseService graphDatabaseService() {
-			return new GraphDatabaseFactory().newEmbeddedDatabase("src/main/resources/baseNeo4jDB.db");
+			return new GraphDatabaseFactory()
+					.newEmbeddedDatabase("src/main/resources/baseNeo4jDB.db");
 		}
 	}
+	private static RelationshipType DISTANCIA = DynamicRelationshipType.withName( "DISTANCIA" );
 	
-	@Autowired LocalRepository localRepository;
+	@Autowired
+	LocalRepository localRepository;
 
-	@Autowired GraphDatabase graphDatabase;
+	@Autowired
+	GraphDatabase graphDatabase;
 	
-	public void run(String ...args) throws Exception{
+	@Autowired
+	GraphDatabaseService graphDatabases;
+
+	public void run(String... args) throws Exception {
 		Local greg = new Local("Greg");
 		Local roy = new Local("Roy");
 		Local craig = new Local("Craig");
-
-		System.out.println("Before linking up with Neo4j...");
-		for (Local local : new Local[] { greg, roy, craig }) {
-			System.out.println(local);
-		}
-
 		Transaction tx = graphDatabase.beginTx();
 		try {
-			localRepository.save(greg);
-			localRepository.save(roy);
-
-			greg = localRepository.findByNome(greg.getNome());
-			greg.criarRota(roy);
-			greg.criarRota(craig);
-			localRepository.save(greg);
-
-			roy = localRepository.findByNome(roy.getNome());
-			roy.criarRota(craig);
-			// We already know that roy works with greg
-			localRepository.save(roy);
-
-			// We already know craig works with roy and greg
-
-			System.out.println("Lookup each person by name...");
-			for (String name : new String[] { greg.getNome(), roy.getNome(), craig.getNome() }) {
-				System.out.println(localRepository.findByNome(name));
-			}
-
+//			localRepository.save(greg);
+//			localRepository.save(roy);
+//			localRepository.save(craig);
+//
+//			greg = localRepository.findByNome(greg.getNome());
+//			System.out.println(greg.getId());
+//			greg.rotaPara(roy, 1L);
+//			greg.rotaPara(craig, 2L);
+//			localRepository.save(greg);
+//			
+//			Set<Rota> set = greg.getRotas();
+//			for (Rota s : set) {
+//			    System.out.println(s.getDistancia());
+//			}
+//			
+//			roy = localRepository.findByNome(roy.getNome());
+//			System.out.println("ROY ID:   " + roy.getId());
+//			roy.rotaPara(craig, 3L);
+//			
+//			// We already know that roy works with greg
+//			localRepository.save(roy);
+//
+//			// We already know craig works with roy and greg
+//
+//			System.out.println("Lookup each person by name...");
+//			for (String name : new String[] { greg.getNome(), roy.getNome(),
+//					craig.getNome() }) {
+//				System.out.println(localRepository.findByNome(name));
+//			}
+//
 			tx.success();
 		} finally {
 			tx.close();
 		}
+		Transaction tx2 = graphDatabase.beginTx();
+		try {
+			
+			Node a = graphDatabases.createNode();
+			a.setProperty("name", "A");
+			
+			Node b = graphDatabases.createNode();
+			b.setProperty("name", "B");
+			
+			Node c = graphDatabases.createNode();
+			c.setProperty("name", "C");
+			
+			Relationship relacao = a.createRelationshipTo(b, DISTANCIA);
+			relacao.setProperty("distancia", 1L);
+			
+			Relationship relacaoa = a.createRelationshipTo(c, DISTANCIA);
+			relacaoa.setProperty("distancia", 4L);
+			
+			Relationship relacaob = b.createRelationshipTo(c, DISTANCIA);
+			relacaob.setProperty("distancia", 3L);
+			
+			
+			PathFinder<WeightedPath> finder = GraphAlgoFactory.dijkstra(
+				    PathExpanders.forTypeAndDirection( DISTANCIA, Direction.BOTH ), "distancia" );
+			
+			WeightedPath path = finder.findSinglePath( a, c );
+			System.out.println(path);
+			tx2.success();
+		} finally {
+			tx2.close();
+		}
+
+		// GraphAlgoFactory.dijkstra(
+		// PathExpanders.forType(type)
+		//
+		// expander, costEvaluator)
 
 	}
 
 	public static void main(String[] args) throws Exception {
+		FileUtils.deleteRecursively(new File(
+				"src/main/resources/baseNeo4jDB.db"));
 		SpringApplication.run(DesafioWallmartApplication.class, args);
-		
+
 	}
 
 }

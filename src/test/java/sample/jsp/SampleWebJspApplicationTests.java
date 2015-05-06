@@ -16,6 +16,9 @@
 
 package sample.jsp;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +31,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import br.com.desafiowallmart.service.DesafioWallmartApplication;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import br.com.desafiowallmart.DesafioWallmartApplication;
 
 /**
  * Basic integration tests for JSP application.
