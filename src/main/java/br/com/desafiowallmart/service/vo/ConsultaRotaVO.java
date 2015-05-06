@@ -1,11 +1,9 @@
 package br.com.desafiowallmart.service.vo;
 
-import java.io.Serializable;
 
 
-public class ConsultaRotaVO implements Serializable{
+public class ConsultaRotaVO{
 
-	private static final long serialVersionUID = 1L;
 	private String origem;
 	private String destino;
 	private Double autonomia;
