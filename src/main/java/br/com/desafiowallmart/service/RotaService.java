@@ -17,6 +17,7 @@
 package br.com.desafiowallmart.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,8 @@ public class RotaService {
 	
 	
 	@RequestMapping(value="/cadastraRota", method = RequestMethod.PUT)
-	public String cadastraRota(CadastraRotaVO cadastraRotaVO) {
+	public String cadastraRota(@RequestBody CadastraRotaVO cadastraRotaVO) {
+		System.out.println(cadastraRotaVO.getNomeMapa());
 		rotaBO.cadastraRota(cadastraRotaVO.getRotaVO());
 		return CADASTRO_SUCESSO;
 	}
