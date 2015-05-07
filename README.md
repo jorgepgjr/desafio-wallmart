@@ -40,7 +40,7 @@ Com o maven instalado,
       }
    ]
 }
-    ```
+```
 - http://localhost/cadastraRotaExample GET
   Retorna um exemplo de JSON para cadastro de Rota
 
