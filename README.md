@@ -5,7 +5,7 @@
 - Spring Boot (configuração mais fácil do sistema)
 - Spring Core (injeção de dependência)
 - Spring Actuator (WS)
-- Tomcat Embeded
+- Tomcat Embeded (Mais fácil para vocês testarem a aplicação)
 - Neo4j (NoSQL baseado em grapho e com o algoritmo de Dijkstra pronto)
 - Mockito (Mock de testes)
 - Travis (C.I.) https://travis-ci.org/jorgepgjr/desafio-wallmart
@@ -19,6 +19,26 @@ Com o maven instalado,
 
 -http://localhost/cadastraRota   PUT
   Cadastra uma rota no formato JSON:
+  {
+   "nomeMapa": "teste",
+   "rotaVO":    [
+            {
+         "origem": "Origem",
+         "destino": "Destino",
+         "distancia": 10
+      },
+            {
+         "origem": "Origem2",
+         "destino": "Destino2",
+         "distancia": 20
+      },
+            {
+         "origem": "Origem3",
+         "destino": "Destino3",
+         "distancia": 30
+      }
+   ]
+}
     
 - http://localhost/cadastraRotaExample GET
   Retorna um exemplo de JSON para cadastro de Rota
@@ -26,6 +46,12 @@ Com o maven instalado,
 - http://localhost/consultaRota POST
 
   Consulta rota no formato JSON:
+  {
+    "origem": "Origem",
+    "destino": "Destino",
+    "autonomia": 5,
+    "valorCombustivel": 5.1
+}
   
 - http://localhost/consultaRotaExample GET
   Retorna um exemplo de JSON para consulta de Rota
