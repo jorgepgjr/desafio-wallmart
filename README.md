@@ -12,7 +12,7 @@
 
 # Como executar:
 Com o maven instalado, 
- - mvn install
+ - mvn package
  - Navegue até a pasta target do projeto e execute java -jar desafio-wallmart-1.2.3.RELEASE.jar
 
 # Para acessar o WS:
