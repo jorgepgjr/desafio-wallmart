@@ -19,6 +19,7 @@ Com o maven instalado,
 
 -http://localhost/cadastraRota   PUT
   Cadastra uma rota no formato JSON:
+  ```
   {
    "nomeMapa": "teste",
    "rotaVO":    [
@@ -39,25 +40,26 @@ Com o maven instalado,
       }
    ]
 }
-    
+    ```
 - http://localhost/cadastraRotaExample GET
   Retorna um exemplo de JSON para cadastro de Rota
 
 - http://localhost/consultaRota POST
 
   Consulta rota no formato JSON:
-  {
-    "origem": "Origem",
-    "destino": "Destino",
-    "autonomia": 5,
-    "valorCombustivel": 5.1
-}
-  
+      {
+        "origem": "Origem",
+        "destino": "Destino",
+        "autonomia": 5,
+        "valorCombustivel": 5.1
+       }
 - http://localhost/consultaRotaExample GET
   Retorna um exemplo de JSON para consulta de Rota
   
 # Referencia do algoritimo:
 http://neo4j.com/docs/stable/tutorials-java-embedded-graph-algo.html
+
+# Tempo do projeto do dia 04/05 - 07/05
 
 #TODO:
 - Relatorio de Cobertura de testes
