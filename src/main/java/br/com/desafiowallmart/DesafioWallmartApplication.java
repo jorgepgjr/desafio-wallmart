@@ -28,12 +28,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
 
+/**
+ * 
+ * Classe para iniciar o sistema
+ * @author jorge
+ *
+ */
 @Configuration
 @SpringBootApplication
 @EnableNeo4jRepositories(basePackages = "br.com.desafiowallmart")
 public class DesafioWallmartApplication extends Neo4jConfiguration{
-
-//	static class ApplicationConfig extends Neo4jConfiguration {
 
 		public DesafioWallmartApplication() {
 			setBasePackage("br.com.desafiowallmart");
@@ -44,7 +48,6 @@ public class DesafioWallmartApplication extends Neo4jConfiguration{
 			return new GraphDatabaseFactory()
 					.newEmbeddedDatabase("src/main/resources/baseNeo4jDB.db");
 		}
-//	}
 
 	public static void main(String[] args) throws Exception {
 		FileUtils.deleteRecursively(new File(

@@ -28,6 +28,10 @@ public class RotaBOTest {
 		rotaBO.cadastraRota(new RotaVO());	
 	}
 	
+	/**
+	 * Teste de consulta de Rota
+	 * cadastra uma rota mockada e verifica se o gasto está de acordo com o esperado
+	 */
 	@Test
 	public void consultaRotaTest(){
 		final ConsultaRotaVO consultaRotaVO = new ConsultaRotaVO();

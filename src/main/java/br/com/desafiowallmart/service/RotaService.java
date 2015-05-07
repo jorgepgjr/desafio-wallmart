@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.desafiowallmart.bo.RotaBO;
@@ -28,6 +29,11 @@ import br.com.desafiowallmart.service.vo.ConsultaRotaVO;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 import br.com.desafiowallmart.vo.RotaVO;
 
+/**
+ * Servico de Rota
+ * @author jorge
+ *
+ */
 @RestController
 public class RotaService {
 
@@ -37,15 +43,50 @@ public class RotaService {
 	private RotaBO rotaBO;
 	
 	
+	/**
+	 * Cadastra uma nova rota. 
+	 * @param cadastraRotaVO rota a ser cadastrada
+	 * @return Mensagem de Sucesso ou erro
+	 */
 	@RequestMapping(value="/cadastraRota", method = RequestMethod.PUT)
-	public String cadastraRota(@RequestBody CadastraRotaVO cadastraRotaVO) {
+	public @ResponseBody String cadastraRota(@RequestBody CadastraRotaVO cadastraRotaVO) {
 		System.out.println(cadastraRotaVO.getNomeMapa());
 		rotaBO.cadastraRota(cadastraRotaVO.getRotaVO());
 		return CADASTRO_SUCESSO;
 	}
 	
+
+	/**
+	 * Consulta a menor rota entre dois pontos
+	 * @param inputVO
+	 * @return {@link ConsultaRotaOutputVO} 
+	 */
+	@RequestMapping(value="/consultaRota", method = RequestMethod.POST)
+	public @ResponseBody ConsultaRotaOutputVO consultaRota(@RequestBody ConsultaRotaVO inputVO) {
+		ConsultaRotaOutputVO vo = rotaBO.consutlaRota(inputVO);
+		return vo;
+	}
+	
+	/**
+	 * Exemplo de JSON a ser passado para o methodo {@link RotaService.consultaRota}}
+	 * @return
+	 */
+	@RequestMapping(value="/consultaRotaExample", method = RequestMethod.GET)
+	public ConsultaRotaVO consultaRotaExample() {
+		ConsultaRotaVO inputVO = new ConsultaRotaVO();
+		inputVO.setAutonomia(new Double(10));
+		inputVO.setDestino("Destino");
+		inputVO.setOrigem("Origem");
+		inputVO.setValorCombustivel(new Double(3.10));
+		return inputVO;
+	}
+	
+	/**
+	 * Exemplo de JSON a ser passado para o methodo {@link RotaService.cadastraRota}}
+	 * @return
+	 */
 	@RequestMapping(value="/cadastraRotaExample", method = RequestMethod.GET)
-	public CadastraRotaVO consultaRotaExample() {
+	public CadastraRotaVO cadastraRotaExample() {
 		CadastraRotaVO cadastraRotaVO = new CadastraRotaVO();
 		cadastraRotaVO.setNomeMapa("teste");
 		RotaVO rotaVO = new RotaVO();
@@ -55,12 +96,5 @@ public class RotaService {
 		cadastraRotaVO.setRotaVO(rotaVO);		
 		return cadastraRotaVO;
 	}
-
-	@RequestMapping(value="/consultaRota", method = RequestMethod.GET)
-	public ConsultaRotaOutputVO consultaRota(@RequestBody ConsultaRotaVO inputVO) {
-		ConsultaRotaOutputVO vo = rotaBO.consutlaRota(inputVO);
-		return vo;
-	}
-
 
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DesafioWallmartApplication.class)
 @Transactional(readOnly=true)
-@Ignore
+//@Ignore
 public class RotaDAOTest {
 
 	@Autowired

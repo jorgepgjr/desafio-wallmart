@@ -10,6 +10,11 @@ import br.com.desafiowallmart.service.vo.ConsultaRotaVO;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 import br.com.desafiowallmart.vo.RotaVO;
 
+/**
+ * Bo que contem as regras de negocio para a consulta de Rota
+ * @author jorge
+ *
+ */
 @Component
 public class RotaBOImpl implements RotaBO{
 
