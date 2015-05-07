@@ -50,8 +50,8 @@ public class DesafioWallmartApplication extends Neo4jConfiguration{
 		}
 
 	public static void main(String[] args) throws Exception {
-		FileUtils.deleteRecursively(new File(
-				"src/main/resources/baseNeo4jDB.db"));
+//		FileUtils.deleteRecursively(new File(
+//				"src/main/resources/baseNeo4jDB.db"));
 		SpringApplication.run(DesafioWallmartApplication.class, args);
 
 	}
