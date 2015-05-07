@@ -16,11 +16,17 @@ Com o maven instalado,
 
 # Para acessar o WS:
 
-  http://localhost/cadastraRota
-    Cadastra uma rota no formato json:
+-http://localhost/cadastraRota   PUT
+  Cadastra uma rota no formato JSON:
     
-  http://localhost/cadastraRotaExample
-  http://localhost/consultaRota
+- http://localhost/cadastraRotaExample GET
+  Retorna um exemplo de JSON para cadastro de Rota
+
+- http://localhost/consultaRota GET
+  Consulta rota no formato JSON:
+  
+- http://localhost/consultaRotaExample GET
+  Retorna um exemplo de JSON para consulta de Rota
   
 # Referencia do algoritimo:
 http://neo4j.com/docs/stable/tutorials-java-embedded-graph-algo.html
