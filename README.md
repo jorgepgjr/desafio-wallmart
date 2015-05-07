@@ -1,6 +1,7 @@
 # Desafio-wallmart
 
 # Tecnologias utilizadas:
+- Java, JDK 7
 - Spring Boot (configuração mais fácil do sistema)
 - Spring Core (injeção de dependência)
 - Spring Actuator (WS)
