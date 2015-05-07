@@ -1,5 +1,6 @@
 package br.com.desafiowallmart.dao;
 
+import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 
 
@@ -24,6 +25,7 @@ public interface RotaDAO {
 	 * @param origem Nome da origem da rota
 	 * @param destino Nome do destino da rota
 	 * @return {@link ConsultaRotaOutputVO} com os dados da rota
+	 * @throws DadosFaltandoException 
 	 */
-	public ConsultaRotaOutputVO consutlaMenorRota(String origem, String destino);
+	public ConsultaRotaOutputVO consutlaMenorRota(String origem, String destino) throws DadosFaltandoException;
 }

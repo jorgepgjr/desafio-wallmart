@@ -19,6 +19,7 @@ import org.springframework.data.neo4j.core.GraphDatabase;
 import org.springframework.stereotype.Component;
 
 import br.com.desafiowallmart.dao.RotaDAO;
+import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 
 @Component
@@ -55,7 +56,7 @@ public class RotaDAOImpl implements RotaDAO {
 	}
 
 	@Override
-	public ConsultaRotaOutputVO consutlaMenorRota(String origem, String destino) {
+	public ConsultaRotaOutputVO consutlaMenorRota(String origem, String destino) throws DadosFaltandoException {
 		final Transaction tx = graphDatabase.beginTx();
 		final Node origemNode;
 		final Node destinoNode;
@@ -68,13 +69,13 @@ public class RotaDAOImpl implements RotaDAO {
 			origemNode = indexService.get(NOME_PROPERTIE, origem).getSingle();
 
 			if (origemNode == null) {
-				// nao encontrado o origem
+				throw new DadosFaltandoException("Origem não encontrada");
 			}
 
 			destinoNode = indexService.get(NOME_PROPERTIE, destino).getSingle();
 
 			if (destinoNode == null) {
-				// nao encontrado o destino
+				throw new DadosFaltandoException("Destino não encontrado");
 			}
 
 			PathFinder<WeightedPath> finder = GraphAlgoFactory.dijkstra(

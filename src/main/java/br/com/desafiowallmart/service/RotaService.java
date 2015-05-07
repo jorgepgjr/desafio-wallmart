@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.desafiowallmart.bo.RotaBO;
+import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
 import br.com.desafiowallmart.service.vo.CadastraRotaVO;
 import br.com.desafiowallmart.service.vo.ConsultaRotaVO;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
@@ -41,7 +42,7 @@ public class RotaService {
 	
 	@Autowired(required=false)
 	private RotaBO rotaBO;
-	
+
 	
 	/**
 	 * Cadastra uma nova rota. 
@@ -50,8 +51,11 @@ public class RotaService {
 	 */
 	@RequestMapping(value="/cadastraRota", method = RequestMethod.PUT)
 	public @ResponseBody String cadastraRota(@RequestBody CadastraRotaVO cadastraRotaVO) {
-		System.out.println(cadastraRotaVO.getNomeMapa());
-		rotaBO.cadastraRota(cadastraRotaVO.getRotaVO());
+		try {
+			rotaBO.cadastraRota(cadastraRotaVO.getRotaVO());
+		} catch (DadosFaltandoException e) {
+			return e.getMessage();
+		}
 		return CADASTRO_SUCESSO;
 	}
 	
@@ -60,10 +64,12 @@ public class RotaService {
 	 * Consulta a menor rota entre dois pontos
 	 * @param inputVO
 	 * @return {@link ConsultaRotaOutputVO} 
+	 * @throws DadosFaltandoException 
 	 */
 	@RequestMapping(value="/consultaRota", method = RequestMethod.POST)
-	public @ResponseBody ConsultaRotaOutputVO consultaRota(@RequestBody ConsultaRotaVO inputVO) {
+	public @ResponseBody ConsultaRotaOutputVO consultaRota(@RequestBody ConsultaRotaVO inputVO) throws DadosFaltandoException {
 		ConsultaRotaOutputVO vo = rotaBO.consutlaRota(inputVO);
+		//TODO: melhorar o retorno de erro
 		return vo;
 	}
 	

@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.desafiowallmart.DesafioWallmartApplication;
+import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,7 +26,7 @@ public class RotaDAOTest {
 	RotaDAO rotaDAO;
 
 	@Test
-	public void consultaRotaTest() {
+	public void consultaRotaTest() throws DadosFaltandoException {
 		List<String> list = new ArrayList<String>();
 		list.add("A");
 		list.add("B");
@@ -35,6 +36,15 @@ public class RotaDAOTest {
 		ConsultaRotaOutputVO vo = rotaDAO.consutlaMenorRota("A", "D");
 		Assert.assertEquals(new Double(8), vo.getDistancia());
 		Assert.assertEquals(list, vo.getRota());
+	}
+	
+	//A B E D
+	@Test
+	public void cadastraMesmaRotaDuasVezesTest() throws DadosFaltandoException {
+		rotaDAO.cadastraRota("A", "B", new Double(10));
+		ConsultaRotaOutputVO vo = rotaDAO.consutlaMenorRota("A", "D");
+		System.out.println(vo.getDistancia());
+		
 	}
 	
 	@Before

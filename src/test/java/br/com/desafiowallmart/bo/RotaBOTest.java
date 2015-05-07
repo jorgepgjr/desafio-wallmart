@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import br.com.desafiowallmart.bo.impl.RotaBOImpl;
 import br.com.desafiowallmart.dao.RotaDAO;
+import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
 import br.com.desafiowallmart.service.vo.ConsultaRotaVO;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 import br.com.desafiowallmart.vo.RotaVO;
@@ -23,17 +24,18 @@ public class RotaBOTest {
 	@InjectMocks
 	RotaBO rotaBO = new RotaBOImpl();
 	
-	@Test
-	public void cadastraRotaTest(){	
+	@Test(expected=DadosFaltandoException.class)
+	public void cadastraRotaTest() throws DadosFaltandoException{	
 		rotaBO.cadastraRota(new RotaVO());	
 	}
 	
 	/**
 	 * Teste de consulta de Rota
 	 * cadastra uma rota mockada e verifica se o gasto está de acordo com o esperado
+	 * @throws DadosFaltandoException 
 	 */
 	@Test
-	public void consultaRotaTest(){
+	public void consultaRotaTest() throws DadosFaltandoException{
 		final ConsultaRotaVO consultaRotaVO = new ConsultaRotaVO();
 		final ConsultaRotaOutputVO outputVO = new ConsultaRotaOutputVO();
 
