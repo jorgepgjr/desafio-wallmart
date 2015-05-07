@@ -24,6 +24,7 @@ Com o maven instalado,
   Retorna um exemplo de JSON para cadastro de Rota
 
 - http://localhost/consultaRota POST
+
   Consulta rota no formato JSON:
   
 - http://localhost/consultaRotaExample GET
