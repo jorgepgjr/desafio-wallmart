@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.desafiowallmart.bo.RotaBO;
 import br.com.desafiowallmart.service.vo.CadastraRotaVO;
+import br.com.desafiowallmart.service.vo.ConsultaRotaVO;
+import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 import br.com.desafiowallmart.vo.RotaVO;
 
 @RestController
@@ -47,6 +49,7 @@ public class RotaService {
 		CadastraRotaVO cadastraRotaVO = new CadastraRotaVO();
 		cadastraRotaVO.setNomeMapa("teste");
 		RotaVO rotaVO = new RotaVO();
+		rotaVO.setOrigem("origem");
 		rotaVO.setDestino("destino");
 		rotaVO.setDistancia(new Double(10));		
 		cadastraRotaVO.setRotaVO(rotaVO);		
@@ -54,8 +57,9 @@ public class RotaService {
 	}
 
 	@RequestMapping(value="/consultaRota", method = RequestMethod.GET)
-	public RotaVO consultaRota(RotaVO teste) {		
-		return teste;
+	public ConsultaRotaOutputVO consultaRota(@RequestBody ConsultaRotaVO inputVO) {
+		ConsultaRotaOutputVO vo = rotaBO.consutlaRota(inputVO);
+		return vo;
 	}
 
 

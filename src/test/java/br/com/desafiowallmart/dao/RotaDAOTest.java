@@ -3,26 +3,26 @@ package br.com.desafiowallmart.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.desafiowallmart.DesafioWallmartApplication;
-import br.com.desafiowallmart.dao.RotaDAO;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DesafioWallmartApplication.class)
 @Transactional(readOnly=true)
+@Ignore
 public class RotaDAOTest {
 
-	@Resource
+	@Autowired
 	RotaDAO rotaDAO;
 
 	@Test
