@@ -1,7 +1,11 @@
 package br.com.desafiowallmart.dao;
 
+import java.util.List;
+
 import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
+import br.com.desafiowallmart.dao.exception.NaoExisteCaminhoException;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
+import br.com.desafiowallmart.vo.RotaVO;
 
 
 /**
@@ -26,6 +30,12 @@ public interface RotaDAO {
 	 * @param destino Nome do destino da rota
 	 * @return {@link ConsultaRotaOutputVO} com os dados da rota
 	 * @throws DadosFaltandoException 
+	 * @throws NaoExisteCaminhoException 
 	 */
-	public ConsultaRotaOutputVO consutlaMenorRota(String origem, String destino) throws DadosFaltandoException;
+	public ConsultaRotaOutputVO consutlaMenorRota(String origem, String destino) throws DadosFaltandoException, NaoExisteCaminhoException;
+
+	/**
+	 * @param listRotaVO
+	 */
+	void cadastraRota(List<RotaVO> listRotaVO);
 }

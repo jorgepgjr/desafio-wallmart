@@ -1,5 +1,7 @@
 package br.com.desafiowallmart.bo.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
@@ -8,6 +10,7 @@ import org.springframework.util.StringUtils;
 import br.com.desafiowallmart.bo.RotaBO;
 import br.com.desafiowallmart.dao.RotaDAO;
 import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
+import br.com.desafiowallmart.dao.exception.NaoExisteCaminhoException;
 import br.com.desafiowallmart.service.vo.ConsultaRotaVO;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 import br.com.desafiowallmart.vo.RotaVO;
@@ -26,7 +29,6 @@ public class RotaBOImpl implements RotaBO {
 
 	@Override
 	public void cadastraRota(RotaVO inputVO) throws DadosFaltandoException {
-
 		// TODO: Refactor, criar um validador do spring para isso
 		if (inputVO == null || StringUtils.isEmpty(inputVO.getDestino())
 				|| StringUtils.isEmpty(inputVO.getOrigem())
@@ -37,10 +39,17 @@ public class RotaBOImpl implements RotaBO {
 		rotaDAO.cadastraRota(inputVO.getOrigem(), inputVO.getDestino(),
 				inputVO.getDistancia());
 	}
+	
+	@Override
+	public void cadastraRota(List<RotaVO> inputVO)
+			throws DadosFaltandoException {
+		rotaDAO.cadastraRota(inputVO);
+		
+	}
 
 	@Override
 	public ConsultaRotaOutputVO consutlaRota(ConsultaRotaVO inputVO)
-			throws DadosFaltandoException {
+			throws DadosFaltandoException, NaoExisteCaminhoException {
 		if (inputVO == null || StringUtils.isEmpty(inputVO.getDestino())
 				|| StringUtils.isEmpty(inputVO.getOrigem())
 				|| inputVO.getValorCombustivel() == null

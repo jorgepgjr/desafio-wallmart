@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import br.com.desafiowallmart.bo.impl.RotaBOImpl;
 import br.com.desafiowallmart.dao.RotaDAO;
 import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
+import br.com.desafiowallmart.dao.exception.NaoExisteCaminhoException;
 import br.com.desafiowallmart.service.vo.ConsultaRotaVO;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
 import br.com.desafiowallmart.vo.RotaVO;
@@ -33,9 +34,10 @@ public class RotaBOTest {
 	 * Teste de consulta de Rota
 	 * cadastra uma rota mockada e verifica se o gasto está de acordo com o esperado
 	 * @throws DadosFaltandoException 
+	 * @throws NaoExisteCaminhoException 
 	 */
 	@Test
-	public void consultaRotaTest() throws DadosFaltandoException{
+	public void consultaRotaTest() throws DadosFaltandoException, NaoExisteCaminhoException{
 		final ConsultaRotaVO consultaRotaVO = new ConsultaRotaVO();
 		final ConsultaRotaOutputVO outputVO = new ConsultaRotaOutputVO();
 

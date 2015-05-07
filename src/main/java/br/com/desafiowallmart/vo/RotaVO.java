@@ -10,6 +10,17 @@ public class RotaVO implements Serializable{
 	private String destino;
 	private Double distancia;
 	
+	public RotaVO(String origem, String destino, Double distancia) {
+		super();
+		this.origem = origem;
+		this.destino = destino;
+		this.distancia = distancia;
+	}
+	
+	public RotaVO() {
+		super();
+	}
+
 	public String getOrigem() {
 		return origem;
 	}

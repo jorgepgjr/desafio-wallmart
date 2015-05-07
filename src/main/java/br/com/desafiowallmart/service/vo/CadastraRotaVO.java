@@ -1,11 +1,13 @@
 package br.com.desafiowallmart.service.vo;
 
+import java.util.List;
+
 import br.com.desafiowallmart.vo.RotaVO;
 
 public class CadastraRotaVO {
 
 	private String nomeMapa;
-	private RotaVO rotaVO;
+	private List<RotaVO> rotaVO;
 
 	public String getNomeMapa() {
 		return nomeMapa;
@@ -15,11 +17,11 @@ public class CadastraRotaVO {
 		this.nomeMapa = nomeMapa;
 	}
 
-	public RotaVO getRotaVO() {
+	public List<RotaVO> getRotaVO() {
 		return rotaVO;
 	}
 
-	public void setRotaVO(RotaVO rotaVO) {
+	public void setRotaVO(List<RotaVO> rotaVO) {
 		this.rotaVO = rotaVO;
 	}
 

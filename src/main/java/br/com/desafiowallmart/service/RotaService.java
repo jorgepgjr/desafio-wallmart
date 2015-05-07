@@ -16,6 +16,9 @@
 
 package br.com.desafiowallmart.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.desafiowallmart.bo.RotaBO;
 import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
+import br.com.desafiowallmart.dao.exception.NaoExisteCaminhoException;
 import br.com.desafiowallmart.service.vo.CadastraRotaVO;
 import br.com.desafiowallmart.service.vo.ConsultaRotaVO;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
@@ -65,9 +69,10 @@ public class RotaService {
 	 * @param inputVO
 	 * @return {@link ConsultaRotaOutputVO} 
 	 * @throws DadosFaltandoException 
+	 * @throws NaoExisteCaminhoException 
 	 */
 	@RequestMapping(value="/consultaRota", method = RequestMethod.POST)
-	public @ResponseBody ConsultaRotaOutputVO consultaRota(@RequestBody ConsultaRotaVO inputVO) throws DadosFaltandoException {
+	public @ResponseBody ConsultaRotaOutputVO consultaRota(@RequestBody ConsultaRotaVO inputVO) throws DadosFaltandoException, NaoExisteCaminhoException {
 		ConsultaRotaOutputVO vo = rotaBO.consutlaRota(inputVO);
 		//TODO: melhorar o retorno de erro
 		return vo;
@@ -98,8 +103,13 @@ public class RotaService {
 		RotaVO rotaVO = new RotaVO();
 		rotaVO.setOrigem("origem");
 		rotaVO.setDestino("destino");
-		rotaVO.setDistancia(new Double(10));		
-		cadastraRotaVO.setRotaVO(rotaVO);		
+		rotaVO.setDistancia(new Double(10));
+		
+		List<RotaVO> listRotaVO = new ArrayList<RotaVO>();
+		listRotaVO.add(new RotaVO("Origem", "Destino", new Double(10)));
+		listRotaVO.add(new RotaVO("Origem2", "Destino2", new Double(20)));
+		listRotaVO.add(new RotaVO("Origem3", "Destino3", new Double(30)));
+		cadastraRotaVO.setRotaVO(listRotaVO);	
 		return cadastraRotaVO;
 	}
 

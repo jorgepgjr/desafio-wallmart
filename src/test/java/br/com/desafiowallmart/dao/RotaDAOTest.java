@@ -14,19 +14,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.desafiowallmart.DesafioWallmartApplication;
 import br.com.desafiowallmart.dao.exception.DadosFaltandoException;
+import br.com.desafiowallmart.dao.exception.NaoExisteCaminhoException;
 import br.com.desafiowallmart.vo.ConsultaRotaOutputVO;
+import br.com.desafiowallmart.vo.RotaVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DesafioWallmartApplication.class)
 @Transactional(readOnly=true)
-//@Ignore
 public class RotaDAOTest {
 
 	@Autowired
 	RotaDAO rotaDAO;
 
+	/**
+	 * Teste caminho feliz de consulta de rota
+	 * @throws DadosFaltandoException
+	 * @throws NaoExisteCaminhoException 
+	 */
 	@Test
-	public void consultaRotaTest() throws DadosFaltandoException {
+	public void consultaRotaTest() throws DadosFaltandoException, NaoExisteCaminhoException {
 		List<String> list = new ArrayList<String>();
 		list.add("A");
 		list.add("B");
@@ -38,23 +44,28 @@ public class RotaDAOTest {
 		Assert.assertEquals(list, vo.getRota());
 	}
 	
-	//A B E D
-	@Test
-	public void cadastraMesmaRotaDuasVezesTest() throws DadosFaltandoException {
-		rotaDAO.cadastraRota("A", "B", new Double(10));
-		ConsultaRotaOutputVO vo = rotaDAO.consutlaMenorRota("A", "D");
-		System.out.println(vo.getDistancia());
-		
-	}
+//	@Test
+//	public void cadastraMesmaRotaDuasVezesTest() throws DadosFaltandoException {
+//		
+//		rotaDAO.cadastraRota("A", "B", new Double(10));
+//		ConsultaRotaOutputVO vo = rotaDAO.consutlaMenorRota("A", "D");
+//		System.out.println(vo.getDistancia());
+//		
+//	}
 	
+	/**
+	 * Pepara o banco ara os demais testes
+	 */
 	@Before
 	public void cadastraRota(){
-		rotaDAO.cadastraRota("A", "B", new Double(1));
-		rotaDAO.cadastraRota("A", "C", new Double(3));
-
-		rotaDAO.cadastraRota("B", "E", new Double(5));
-		rotaDAO.cadastraRota("D", "C", new Double(6));
-		rotaDAO.cadastraRota("E", "D", new Double(2));
+		List<RotaVO> list = new ArrayList<RotaVO>();
+		list.add(new RotaVO("A", "B", new Double(1)));
+		list.add(new RotaVO("A", "C", new Double(3)));
+		
+		list.add(new RotaVO("B", "E", new Double(5)));
+		list.add(new RotaVO("D", "C", new Double(6)));
+		list.add(new RotaVO("E", "D", new Double(2)));
+		rotaDAO.cadastraRota(list);
 	}
 
 }
