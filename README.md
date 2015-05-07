@@ -47,12 +47,14 @@ Com o maven instalado,
 - http://localhost/consultaRota POST
 
   Consulta rota no formato JSON:
+```
       {
         "origem": "Origem",
         "destino": "Destino",
         "autonomia": 5,
         "valorCombustivel": 5.1
        }
+```
 - http://localhost/consultaRotaExample GET
   Retorna um exemplo de JSON para consulta de Rota
   
