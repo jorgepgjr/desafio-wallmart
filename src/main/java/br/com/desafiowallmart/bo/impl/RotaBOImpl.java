@@ -14,28 +14,43 @@ import br.com.desafiowallmart.vo.RotaVO;
 
 /**
  * Bo que contem as regras de negocio para a consulta de Rota
+ * 
  * @author jorge
  *
  */
 @Component
-public class RotaBOImpl implements RotaBO{
+public class RotaBOImpl implements RotaBO {
 
 	@Resource
 	private RotaDAO rotaDAO;
-	
+
 	@Override
 	public void cadastraRota(RotaVO inputVO) throws DadosFaltandoException {
 
-		//TODO: Refactor, criar um validador do spring para isso
-		if (inputVO == null || StringUtils.isEmpty(inputVO.getDestino()) || StringUtils.isEmpty(inputVO.getOrigem()) || inputVO.getDistancia() == null) {
-			throw new DadosFaltandoException("Está faltando alguma informação, Origem, Destino ou Distancia");
+		// TODO: Refactor, criar um validador do spring para isso
+		if (inputVO == null || StringUtils.isEmpty(inputVO.getDestino())
+				|| StringUtils.isEmpty(inputVO.getOrigem())
+				|| inputVO.getDistancia() == null) {
+			throw new DadosFaltandoException(
+					"Está faltando alguma informação, Origem, Destino ou Distancia");
 		}
-		rotaDAO.cadastraRota(inputVO.getOrigem(), inputVO.getDestino(), inputVO.getDistancia());
+		rotaDAO.cadastraRota(inputVO.getOrigem(), inputVO.getDestino(),
+				inputVO.getDistancia());
 	}
 
 	@Override
-	public ConsultaRotaOutputVO consutlaRota(ConsultaRotaVO inputVO) throws DadosFaltandoException {
-		ConsultaRotaOutputVO retorno = rotaDAO.consutlaMenorRota(inputVO.getOrigem(), inputVO.getDestino());
+	public ConsultaRotaOutputVO consutlaRota(ConsultaRotaVO inputVO)
+			throws DadosFaltandoException {
+		if (inputVO == null || StringUtils.isEmpty(inputVO.getDestino())
+				|| StringUtils.isEmpty(inputVO.getOrigem())
+				|| inputVO.getValorCombustivel() == null
+				|| inputVO.getAutonomia() == null) {
+			throw new DadosFaltandoException(
+					"Está faltando alguma informação, Origem, Destino, Valor do combustivel ou Autonomia");
+		}
+
+		ConsultaRotaOutputVO retorno = rotaDAO.consutlaMenorRota(
+				inputVO.getOrigem(), inputVO.getDestino());
 		double litrosGastos = retorno.getDistancia() / inputVO.getAutonomia();
 		retorno.setGasto(litrosGastos * inputVO.getValorCombustivel());
 		return retorno;
