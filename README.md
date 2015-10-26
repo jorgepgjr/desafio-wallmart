@@ -1,5 +1,6 @@
 # Desafio-wallmart
 
+[![Build Status](https://travis-ci.org/jorgepgjr/desafio-wallmart.svg?branch=master)](https://travis-ci.org/jorgepgjr/desafio-wallmart)
 # Tecnologias utilizadas:
 - Java, JDK 7
 - Spring Boot (configuração mais fácil do sistema)
